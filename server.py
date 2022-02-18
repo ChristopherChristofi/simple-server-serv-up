@@ -1,31 +1,21 @@
-import sys
-import http.server
-import socketserver
+from http.server import BaseHTTPRequestHandler
+import os
 
-if sys.argv[1:]:
-    PORT = int(sys.argv[1])
-else:
-    PORT = 8000
-
-if sys.argv[2:]:
-    SERVER = str(sys.argv[2])
-else:
-    SERVER = '127.0.0.1'
-
-
-class ServerRequestHandler(http.server.SimpleHTTPRequestHandler):
-
+class Server(BaseHTTPRequestHandler):
     def do_GET(self):
-        self.path = 'index.html'
-        return http.server.SimpleHTTPRequestHandler.do_GET(self)
-
-
-
-def run(port=PORT, server=SERVER):
-    Handler = ServerRequestHandler
-
-    with socketserver.TCPServer((server, port), Handler) as httpd:
-        print("Serving on port: {sv}:{pt}".format(sv=SERVER, pt=PORT))
-        httpd.serve_forever()
-
-run(PORT, SERVER)
+        if self.path == '/':
+            self.path = '/index.html'
+        try:
+            split_path = os.path.splitext(self.path)
+            request_extension = split_path[1]
+            if request_extension != ".py":
+                f = open(self.path[1:]).read()
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(bytes(f, 'utf-8'))
+            else:
+                f = "File not found"
+                self.send_error(404, f)
+        except:
+            f = "File not found"
+            self.send_error(404, f)
