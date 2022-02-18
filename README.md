@@ -1,4 +1,4 @@
-# simple-react-python-server
+# simple-server-serv-up
 
 ## Description:
 If you want to play around with some basic development practice with something like ReactJS, then here is a simple HTTP server implementation to help set you up - without all the hefty install this, sign up here, backend configuration.
@@ -12,15 +12,25 @@ If you want to play around with some basic development practice with something l
 Run in the command-line:
 
 ```sh
-python3 server.py
+python3 serv.py
 ```
 
-or define your own server address: port location then IP identifier
+then open (default) 127.0.0.1:8000/
+
+- redirects to default path 'index.html'
+
+or define your own port location and IP identifier:
 
 ```sh
-python server.py 8080 127.0.0.1
+python serv.py -p 1111 -h 0.0.0.0
 ```
 
-then open (default) 127.0.0.1:8000/index.html
+then open 0.0.0.0:1111/
 
-default path is 'index.html'
+## Help:
+
+For help information run in the command-line:
+
+```sh
+python3 serv.py -i
+```
