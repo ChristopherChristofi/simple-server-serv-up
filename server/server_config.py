@@ -1,7 +1,11 @@
 from http.server import BaseHTTPRequestHandler
 import os
 
-class Server(BaseHTTPRequestHandler):
+class ServServer(BaseHTTPRequestHandler):
+    def __response(self):
+        self.send_response(200)
+        self.end_headers()
+
     def do_GET(self):
         if self.path == '/':
             self.path = '/index.html'
@@ -10,8 +14,7 @@ class Server(BaseHTTPRequestHandler):
             request_extension = split_path[1]
             if request_extension != ".py":
                 f = open(self.path[1:]).read()
-                self.send_response(200)
-                self.end_headers()
+                self.__response()
                 self.wfile.write(bytes(f, 'utf-8'))
             else:
                 f = "File not found"

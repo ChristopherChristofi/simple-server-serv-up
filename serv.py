@@ -1,6 +1,6 @@
 import sys, getopt
 from http.server import HTTPServer
-from server import Server
+from server.server_config import ServServer
 
 def get_options(args, HOST, PORT):
 
@@ -21,7 +21,7 @@ def get_options(args, HOST, PORT):
 
 def serv_it(host, port):
 
-    httpd = HTTPServer((host, int(port)), Server)
+    httpd = HTTPServer((host, int(port)), ServServer)
     print("Serving on port: {host}:{port}".format(host=host, port=port))
     try:
         httpd.serve_forever()
